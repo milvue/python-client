@@ -35,7 +35,7 @@ def get(
         "x-goog-meta-owner": token,
     }
     r = requests.get(url=url, header=headers)
-    res = decode_multipart(r)
+    res = decode_multipart(r.content, r.headers.get("Content-Type"))
     return res
 
 

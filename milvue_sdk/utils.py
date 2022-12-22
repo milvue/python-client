@@ -3,7 +3,6 @@ import gzip
 from io import BytesIO
 
 import pydicom
-import requests
 from pydicom.filebase import DicomFileLike
 from requests_toolbelt import MultipartDecoder, MultipartEncoder
 
@@ -29,19 +28,23 @@ def encode_multipart(
     return encoder.to_string(), f"multipart/related; boundary={encoder.boundary_value}"
 
 
-def decode_multipart(r: requests.Response) -> list[bytes]:
-    if len(r.content) == 38:  # b'--32LongBoundary--\r\n': empty response
+def decode_multipart(content, content_type) -> list[bytes]:
+    if len(content) == 38:  # b'--32LongBoundary--\r\n': empty response
         return []
     decoder = MultipartDecoder(
-        content=r.content,
-        content_type=r.headers.get("Content-Type"),
+        content=content,
+        content_type=content_type,
         encoding="utf-8",
     )
-    dicom_bytes_list = []
+    dcm_list = []
     for part in decoder.parts:
         part_content_type = part.headers.get(b"Content-Type")
         if part_content_type == b"application/dicom":
-            dicom_bytes_list.append(part.content)
-        if part_content_type == b"application/dicom+gzip":
-            dicom_bytes_list.append(gzip.decompress(part.content))
-    return dicom_bytes_list
+            dcm_bytes = part.content
+        elif part_content_type == b"application/dicom+gzip":
+            dcm_bytes = gzip.decompress(part.content)
+        else:
+            continue
+        dcm = pydicom.dcmread(BytesIO(dcm_bytes))
+        dcm_list.append(dcm)
+    return dcm_list
