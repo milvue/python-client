@@ -18,12 +18,15 @@ def write_dataset_to_bytes(dcm, **kwargs):
 
 
 def encode_multipart(
-    part: bytes,
-    content_type: str,
+    bytes_list: list[bytes],
+    content_type: str = "application/dicom",
     boundary=None,
     encoding="utf-8",
 ) -> Tuple[str, str]:
-    fields = [("elem_0", ("elem_0", part, content_type))]
+
+    fields = [
+        (f"elem_{i}", (f"elem_{i}", x, content_type)) for i, x in enumerate(bytes_list)
+    ]
     encoder = MultipartEncoder(fields, boundary=boundary, encoding=encoding)
     return encoder.to_string(), f"multipart/related; boundary={encoder.boundary_value}"
 

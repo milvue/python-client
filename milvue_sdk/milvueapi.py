@@ -11,325 +11,325 @@ from pydantic import BaseModel, Field
 
 
 class ErrorResponse(BaseModel):
-    message: str = Field(..., title='Message')
-    example: Optional[str] = Field(None, title='Example')
+    message: str = Field(..., title="Message")
+    example: Optional[str] = Field(None, title="Example")
 
 
 class InferenceCommandEnum(Enum):
-    smarturgences = 'smarturgences'
-    smartxpert = 'smartxpert'
+    smarturgences = "smarturgences"
+    smartxpert = "smartxpert"
 
 
 class InferenceStatusEnum(Enum):
-    done = 'done'
-    running = 'running'
-    empty = 'empty'
-    forbidden = 'forbidden'
+    done = "done"
+    running = "running"
+    empty = "empty"
+    forbidden = "forbidden"
 
 
 class InstanceSchema(BaseModel):
     SOPInstanceUID: str = Field(
         ...,
-        description='The `SOPInstanceUID (0008,0018)` attribute of the dicom instance',
-        title='SOPInstanceUID',
+        description="The `SOPInstanceUID (0008,0018)` attribute of the dicom instance",
+        title="SOPInstanceUID",
     )
     SeriesInstanceUID: Optional[str] = Field(
         None,
-        description='The `SeriesInstanceUID (0020,000E)` attribute of the series',
-        title='StudyInstanceUID',
+        description="The `SeriesInstanceUID (0020,000E)` attribute of the series",
+        title="StudyInstanceUID",
     )
 
 
 class InstanceWithUrlSchema(BaseModel):
     SOPInstanceUID: str = Field(
         ...,
-        description='The `SOPInstanceUID (0008,0018)` attribute of the dicom instance',
-        title='SOPInstanceUID',
+        description="The `SOPInstanceUID (0008,0018)` attribute of the dicom instance",
+        title="SOPInstanceUID",
     )
     SeriesInstanceUID: Optional[str] = Field(
         None,
-        description='The `SeriesInstanceUID (0020,000E)` attribute of the series',
-        title='StudyInstanceUID',
+        description="The `SeriesInstanceUID (0020,000E)` attribute of the series",
+        title="StudyInstanceUID",
     )
     signed_url: str = Field(
         ...,
-        description='Signed url to upload/download to/from Milvue server',
-        title='Signed Url',
+        description="Signed url to upload/download to/from Milvue server",
+        title="Signed Url",
     )
 
 
 class LanguageEnum(Enum):
-    fr = 'fr'
-    en = 'en'
-    es = 'es'
-    de = 'de'
-    it = 'it'
-    pt = 'pt'
+    fr = "fr"
+    en = "en"
+    es = "es"
+    de = "de"
+    it = "it"
+    pt = "pt"
 
 
 class MeasureTypeEnum(Enum):
-    angle = 'angle'
-    length = 'length'
+    angle = "angle"
+    length = "length"
 
 
 class OutputFormatEnum(Enum):
-    overlay = 'overlay'
-    highbit = 'highbit'
-    gsps = 'gsps'
+    overlay = "overlay"
+    highbit = "highbit"
+    gsps = "gsps"
 
 
 class OutputSelectionEnum(Enum):
-    all = 'all'
-    no_recap = 'no_recap'
-    no_negatives = 'no_negatives'
-    none = 'none'
+    all = "all"
+    no_recap = "no_recap"
+    no_negatives = "no_negatives"
+    none = "none"
 
 
 class PathoLabelEnum(Enum):
-    abnormal = 'abnormal'
-    normal = 'normal'
-    doubt = 'doubt'
-    unknown = 'unknown'
-    out_scope = 'out_scope'
+    abnormal = "abnormal"
+    normal = "normal"
+    doubt = "doubt"
+    unknown = "unknown"
+    out_scope = "out_scope"
 
 
 class PathoStatusEnum(Enum):
-    yes = 'yes'
-    no = 'no'
-    doubt = 'doubt'
-    out_scope = 'out_scope'
-    unknown = 'unknown'
+    yes = "yes"
+    no = "no"
+    doubt = "doubt"
+    out_scope = "out_scope"
+    unknown = "unknown"
 
 
 class PostDicomWebResponseV3(BaseModel):
     StudyInstanceUID: str = Field(
         ...,
-        description='The `StudyInstanceUID (0020,000D)` attribute of the study',
-        title='StudyInstanceUID',
+        description="The `StudyInstanceUID (0020,000D)` attribute of the study",
+        title="StudyInstanceUID",
     )
-    message: str = Field(..., title='Message')
-    retrieve_url: Optional[str] = Field(None, title='Retrieve Url')
+    message: str = Field(..., title="Message")
+    retrieve_url: Optional[str] = Field(None, title="Retrieve Url")
 
 
 class PostSignedUrlResponseV3(BaseModel):
     StudyInstanceUID: str = Field(
         ...,
-        description='The `StudyInstanceUID (0020,000D)` attribute of the study',
-        title='StudyInstanceUID',
+        description="The `StudyInstanceUID (0020,000D)` attribute of the study",
+        title="StudyInstanceUID",
     )
-    signed_urls: Dict[str, str] = Field(..., title='Signed Urls')
+    signed_urls: Dict[str, str] = Field(..., title="Signed Urls")
 
 
 class RecapThemeEnum(Enum):
-    dark = 'dark'
-    light = 'light'
+    dark = "dark"
+    light = "light"
 
 
 class Status2(Enum):
-    running = 'running'
-    forbidden = 'forbidden'
+    running = "running"
+    forbidden = "forbidden"
 
 
 class ResponseV3(BaseModel):
     StudyInstanceUID: str = Field(
         ...,
-        description='The `StudyInstanceUID (0020,000D)` attribute of the study',
-        title='StudyInstanceUID',
+        description="The `StudyInstanceUID (0020,000D)` attribute of the study",
+        title="StudyInstanceUID",
     )
-    status: Status2 = Field(..., title='Status')
-    version: str = Field(..., description="Milvue Suite's version", title='Version')
+    status: Status2 = Field(..., title="Status")
+    version: str = Field(..., description="Milvue Suite's version", title="Version")
     message: Optional[str] = Field(
-        None, description='Optional message', title='Message'
+        None, description="Optional message", title="Message"
     )
 
 
 class ResultSchema(BaseModel):
-    region: str = Field(..., title='Region')
-    items: List[str] = Field(..., title='Items')
+    region: str = Field(..., title="Region")
+    items: List[str] = Field(..., title="Items")
 
 
 class Status3(Enum):
-    done = 'done'
+    done = "done"
 
 
 class Status4(Enum):
-    done = 'done'
+    done = "done"
 
 
 class StaticReportEnum(Enum):
-    rgb = 'rgb'
-    pdf = 'pdf'
-    none = 'none'
+    rgb = "rgb"
+    pdf = "pdf"
+    none = "none"
 
 
 class StructuredReportEnum(Enum):
-    lite = 'lite'
-    normal = 'normal'
-    full = 'full'
-    none = 'none'
+    lite = "lite"
+    normal = "normal"
+    full = "full"
+    none = "none"
 
 
 class StudySchema(BaseModel):
     StudyInstanceUID: str = Field(
         ...,
-        description='The `StudyInstanceUID (0020,000D)` attribute of the study',
-        title='StudyInstanceUID',
+        description="The `StudyInstanceUID (0020,000D)` attribute of the study",
+        title="StudyInstanceUID",
     )
 
 
 class StudyStatusEnum(Enum):
-    done = 'done'
-    running = 'running'
-    error = 'error'
+    done = "done"
+    running = "running"
+    error = "error"
 
 
 class ValidationError(BaseModel):
-    loc: List[Union[str, int]] = Field(..., title='Location')
-    msg: str = Field(..., title='Message')
-    type: str = Field(..., title='Error Type')
+    loc: List[Union[str, int]] = Field(..., title="Location")
+    msg: str = Field(..., title="Message")
+    type: str = Field(..., title="Error Type")
 
 
 class IntegratorSchemasExternalFlagSchema(BaseModel):
     score: float = Field(
-        ..., description='Prediction score, between 0 and 1', title='Score'
+        ..., description="Prediction score, between 0 and 1", title="Score"
     )
-    label: PathoLabelEnum = Field(..., description='Prediction interpretation')
+    label: PathoLabelEnum = Field(..., description="Prediction interpretation")
 
 
 class IntegratorSchemasExternalTranslationSchema(BaseModel):
-    en: str = Field(..., title='English')
-    fr: str = Field(..., title='French')
-    es: str = Field(..., title='Spanish')
-    de: str = Field(..., title='German')
-    it: str = Field(..., title='Italian')
-    pt: str = Field(..., title='Portuguese')
+    en: str = Field(..., title="English")
+    fr: str = Field(..., title="French")
+    es: str = Field(..., title="Spanish")
+    de: str = Field(..., title="German")
+    it: str = Field(..., title="Italian")
+    pt: str = Field(..., title="Portuguese")
 
 
 class BodyPartSchema(BaseModel):
-    value: str = Field(..., description='Predicted body part', title='Value')
+    value: str = Field(..., description="Predicted body part", title="Value")
     translation: IntegratorSchemasExternalTranslationSchema
     score: float = Field(
-        ..., description='Prediction score, between 0 and 1', title='Score'
+        ..., description="Prediction score, between 0 and 1", title="Score"
     )
 
 
 class BoundingBoxSchema(BaseModel):
-    value: str = Field(..., description='Predicted value', title='Value')
+    value: str = Field(..., description="Predicted value", title="Value")
     translation: IntegratorSchemasExternalTranslationSchema
-    label: PathoLabelEnum = Field(..., description='Prediction interpretation')
+    label: PathoLabelEnum = Field(..., description="Prediction interpretation")
     score: float = Field(
-        ..., description='Prediction score, between 0 and 1', title='Score'
+        ..., description="Prediction score, between 0 and 1", title="Score"
     )
     top_left: List[int] = Field(
-        ..., description='The top left corner of the box: `[x, y]`', title='Top Left'
+        ..., description="The top left corner of the box: `[x, y]`", title="Top Left"
     )
     bottom_right: List[int] = Field(
         ...,
-        description='The bottom right corner of the box: `[x, y]`',
-        title='Bottom Right',
+        description="The bottom right corner of the box: `[x, y]`",
+        title="Bottom Right",
     )
 
 
 class GetStudyResponseV3(BaseModel):
     StudyInstanceUID: str = Field(
         ...,
-        description='The `StudyInstanceUID (0020,000D)` attribute of the study',
-        title='StudyInstanceUID',
+        description="The `StudyInstanceUID (0020,000D)` attribute of the study",
+        title="StudyInstanceUID",
     )
     status: InferenceStatusEnum = Field(
-        ..., description='Current status of the study', title='Status'
+        ..., description="Current status of the study", title="Status"
     )
-    version: str = Field(..., description="Milvue Suite's version", title='Version')
+    version: str = Field(..., description="Milvue Suite's version", title="Version")
     message: Optional[str] = Field(
-        None, description='Optional message', title='Message'
+        None, description="Optional message", title="Message"
     )
     signed_urls: Optional[List[str]] = Field(
         None,
-        description='List of signed urls to download from Milvue server',
-        title='Signed Urls',
+        description="List of signed urls to download from Milvue server",
+        title="Signed Urls",
     )
 
 
 class GetStudyStatusResponseV3(BaseModel):
     StudyInstanceUID: str = Field(
         ...,
-        description='The `StudyInstanceUID (0020,000D)` attribute of the study',
-        title='StudyInstanceUID',
+        description="The `StudyInstanceUID (0020,000D)` attribute of the study",
+        title="StudyInstanceUID",
     )
     status: StudyStatusEnum = Field(
-        ..., description='Current status of the study', title='Status'
+        ..., description="Current status of the study", title="Status"
     )
-    version: str = Field(..., description="Milvue Suite's version", title='Version')
+    version: str = Field(..., description="Milvue Suite's version", title="Version")
     message: Optional[str] = Field(
-        None, description='Optional message', title='Message'
+        None, description="Optional message", title="Message"
     )
 
 
 class HTTPValidationError(BaseModel):
-    detail: Optional[List[ValidationError]] = Field(None, title='Detail')
+    detail: Optional[List[ValidationError]] = Field(None, title="Detail")
 
 
 class MeasureSchema(BaseModel):
-    type: MeasureTypeEnum = Field(..., title='Type')
-    value: str = Field(..., description='Predicted value', title='Value')
+    type: MeasureTypeEnum = Field(..., title="Type")
+    value: str = Field(..., description="Predicted value", title="Value")
     translation: IntegratorSchemasExternalTranslationSchema
-    measure: float = Field(..., description='Predicted measure', title='Measure')
-    unit: str = Field(..., description='Measure unit (e.g., `mm`, `deg`)', title='Unit')
+    measure: float = Field(..., description="Predicted measure", title="Measure")
+    unit: str = Field(..., description="Measure unit (e.g., `mm`, `deg`)", title="Unit")
     lines: List[List[int]] = Field(
         ...,
-        description='\nA list of lines, each line being a pair of points: `[x1, y1, x2, y2]`\n\nMeasures of type `angle` contain two lines, forming the two rays\n\nMeasures of type `length` contain one line, forming the measured segment\n',
-        title='Lines',
+        description="\nA list of lines, each line being a pair of points: `[x1, y1, x2, y2]`\n\nMeasures of type `angle` contain two lines, forming the two rays\n\nMeasures of type `length` contain one line, forming the measured segment\n",
+        title="Lines",
     )
 
 
 class ReportSchema(BaseModel):
-    title: str = Field(..., title='Title')
-    techniques: List[str] = Field(..., title='Techniques')
-    results: List[ResultSchema] = Field(..., title='Results')
+    title: str = Field(..., title="Title")
+    techniques: List[str] = Field(..., title="Techniques")
+    results: List[ResultSchema] = Field(..., title="Results")
 
 
 class SmartxpertInstanceSchema(BaseModel):
     SOPInstanceUID: str = Field(
         ...,
-        description='The `SOPInstanceUID (0008,0018)` attribute of the dicom instance',
-        title='SOPInstanceUID',
+        description="The `SOPInstanceUID (0008,0018)` attribute of the dicom instance",
+        title="SOPInstanceUID",
     )
     SeriesInstanceUID: str = Field(
         ...,
-        description='The `SeriesInstanceUID (0020,000E)` attribute of the series',
-        title='StudyInstanceUID',
+        description="The `SeriesInstanceUID (0020,000E)` attribute of the series",
+        title="StudyInstanceUID",
     )
-    body_parts: List[BodyPartSchema] = Field(..., title='Body Parts')
+    body_parts: List[BodyPartSchema] = Field(..., title="Body Parts")
     measures: List[MeasureSchema] = Field(
-        ..., description='A list of measures, e.g., length or angle.', title='Measures'
+        ..., description="A list of measures, e.g., length or angle.", title="Measures"
     )
 
 
 class SmartxpertV3(BaseModel):
     StudyInstanceUID: str = Field(
         ...,
-        description='The `StudyInstanceUID (0020,000D)` attribute of the study',
-        title='StudyInstanceUID',
+        description="The `StudyInstanceUID (0020,000D)` attribute of the study",
+        title="StudyInstanceUID",
     )
-    status: Status4 = Field(..., title='Status')
-    version: str = Field(..., description="Milvue Suite's version", title='Version')
+    status: Status4 = Field(..., title="Status")
+    version: str = Field(..., description="Milvue Suite's version", title="Version")
     message: Optional[str] = Field(
-        None, description='Optional message', title='Message'
+        None, description="Optional message", title="Message"
     )
     instances: List[SmartxpertInstanceSchema] = Field(
-        ..., description='Detailed results for each instance', title='Instances'
+        ..., description="Detailed results for each instance", title="Instances"
     )
 
 
 class IntegratorSchemasExternalFindingSchema(BaseModel):
-    value: str = Field(..., description='Predicted value', title='Value')
+    value: str = Field(..., description="Predicted value", title="Value")
     translation: IntegratorSchemasExternalTranslationSchema
-    label: PathoLabelEnum = Field(..., description='Prediction interpretation')
+    label: PathoLabelEnum = Field(..., description="Prediction interpretation")
     score: float = Field(
-        ..., description='Prediction score, between 0 and 1', title='Score'
+        ..., description="Prediction score, between 0 and 1", title="Score"
     )
     type: Optional[PathoStatusEnum] = Field(
-        None, description='Deprecated: use `label` instead'
+        None, description="Deprecated: use `label` instead"
     )
 
 
@@ -337,64 +337,64 @@ class GetSmartxpertResponseV3(BaseModel):
     __root__: Union[SmartxpertV3, ResponseV3] = Field(
         ...,
         discriminator={
-            'propertyName': 'status',
-            'mapping': {
-                'done': '#/components/schemas/SmartxpertV3',
-                'running': '#/components/schemas/ResponseV3',
-                'forbidden': '#/components/schemas/ResponseV3',
+            "propertyName": "status",
+            "mapping": {
+                "done": "#/components/schemas/SmartxpertV3",
+                "running": "#/components/schemas/ResponseV3",
+                "forbidden": "#/components/schemas/ResponseV3",
             },
         },
-        title='GetSmartxpertResponseV3',
+        title="GetSmartxpertResponseV3",
     )
 
 
 class SmarturgencesInstanceSchema(BaseModel):
     SOPInstanceUID: str = Field(
         ...,
-        description='The `SOPInstanceUID (0008,0018)` attribute of the dicom instance',
-        title='SOPInstanceUID',
+        description="The `SOPInstanceUID (0008,0018)` attribute of the dicom instance",
+        title="SOPInstanceUID",
     )
     SeriesInstanceUID: str = Field(
         ...,
-        description='The `SeriesInstanceUID (0020,000E)` attribute of the series',
-        title='StudyInstanceUID',
+        description="The `SeriesInstanceUID (0020,000E)` attribute of the series",
+        title="StudyInstanceUID",
     )
-    body_parts: List[BodyPartSchema] = Field(..., title='Body Parts')
+    body_parts: List[BodyPartSchema] = Field(..., title="Body Parts")
     findings: List[IntegratorSchemasExternalFindingSchema] = Field(
-        ..., title='Findings'
+        ..., title="Findings"
     )
-    bounding_boxes: List[BoundingBoxSchema] = Field(..., title='Bounding Boxes')
+    bounding_boxes: List[BoundingBoxSchema] = Field(..., title="Bounding Boxes")
 
 
 class SmarturgencesV3(BaseModel):
     StudyInstanceUID: str = Field(
         ...,
-        description='The `StudyInstanceUID (0020,000D)` attribute of the study',
-        title='StudyInstanceUID',
+        description="The `StudyInstanceUID (0020,000D)` attribute of the study",
+        title="StudyInstanceUID",
     )
-    status: Status3 = Field(..., title='Status')
-    version: str = Field(..., description="Milvue Suite's version", title='Version')
+    status: Status3 = Field(..., title="Status")
+    version: str = Field(..., description="Milvue Suite's version", title="Version")
     message: Optional[str] = Field(
-        None, description='Optional message', title='Message'
+        None, description="Optional message", title="Message"
     )
     flag: IntegratorSchemasExternalFlagSchema = Field(
         ...,
-        description='Study level flag, providing SmartUrgences overall result',
-        title='Flag',
+        description="Study level flag, providing SmartUrgences overall result",
+        title="Flag",
     )
     hl7: str = Field(
-        ..., description='HL7 message describing the study level results', title='HL7'
+        ..., description="HL7 message describing the study level results", title="HL7"
     )
     findings: List[IntegratorSchemasExternalFindingSchema] = Field(
-        ..., description='List of study level findings', title='Findings'
+        ..., description="List of study level findings", title="Findings"
     )
     instances: List[SmarturgencesInstanceSchema] = Field(
-        ..., description='Detailed results for each instance', title='Instances'
+        ..., description="Detailed results for each instance", title="Instances"
     )
     signed_url: Optional[str] = Field(
         None,
-        description='Signed url to download study recapitulative dicom',
-        title='Signed Url',
+        description="Signed url to download study recapitulative dicom",
+        title="Signed Url",
     )
     report: Optional[ReportSchema] = None
 
@@ -403,12 +403,12 @@ class GetSmarturgencesResponseV3(BaseModel):
     __root__: Union[SmarturgencesV3, ResponseV3] = Field(
         ...,
         discriminator={
-            'propertyName': 'status',
-            'mapping': {
-                'done': '#/components/schemas/SmarturgencesV3',
-                'running': '#/components/schemas/ResponseV3',
-                'forbidden': '#/components/schemas/ResponseV3',
+            "propertyName": "status",
+            "mapping": {
+                "done": "#/components/schemas/SmarturgencesV3",
+                "running": "#/components/schemas/ResponseV3",
+                "forbidden": "#/components/schemas/ResponseV3",
             },
         },
-        title='GetSmarturgencesResponseV3',
+        title="GetSmarturgencesResponseV3",
     )
