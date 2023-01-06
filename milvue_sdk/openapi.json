@@ -1,0 +1,1585 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "FastAPI",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/v3/studies": {
+            "post": {
+                "summary": "v3 - Post Dicoms (STOW)",
+                "description": "Post one or several dicom(s) to Milvue API, in Multipart/Related format (STOW).\n\nDicoms should be part of the same study.\n\nExample:\n```\ncurl --header \"x-goog-meta-owner: <my-api-key>\" --header \"Content-Type: multipart/related; type=application/dicom\" --form \"file1=@<dicom1>;type=application/dicom\" --form \"file2=@<dicom2.dcm>;type=application/dicom\" -X POST \"https://dev.predict.milvue.com/v3/studies\"\n```",
+                "operationId": "post_multipart_v3_v3_studies_post",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Signed Url",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "name": "signed_url",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Organizationid",
+                            "type": "string"
+                        },
+                        "name": "organizationId",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Siteid",
+                            "type": "string"
+                        },
+                        "name": "siteId",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Analysisid",
+                            "type": "string"
+                        },
+                        "name": "analysisId",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Accept",
+                            "type": "string"
+                        },
+                        "name": "accept",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Upload successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Response Post Multipart V3 V3 Studies Post",
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/PostDicomWebResponseV3"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/PostSignedUrlResponseV3"
+                                        }
+                                    ]
+                                }
+                            },
+                            "application/dicom+xml": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Exceeded quota",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    }
+                ]
+            }
+        },
+        "/v3/studies/{study_instance_uid}/status": {
+            "get": {
+                "summary": "v3 - Get Study Status",
+                "description": "GET the status for a given study.\n\nExample:\n```\ncurl --header \"x-goog-meta-owner: <my-api-key>\" --header \"Accept: application/json\" -X GET \"https://dev.predict.milvue.com/v3/studies/<my-StudyInstanceUID>/status\"\n```\nReturn:\n- A json with the prediction status (e.g. `running`)",
+                "operationId": "_get_study_status_v3_studies__study_instance_uid__status_get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Study Instance Uid",
+                            "type": "string"
+                        },
+                        "name": "study_instance_uid",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetStudyStatusResponseV3"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Exceeded quota",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    }
+                ]
+            }
+        },
+        "/v3/studies/{study_instance_uid}": {
+            "get": {
+                "summary": "v3 - Get Dicom Results (WADO)",
+                "description": "GET a study from Milvue API, in Multipart/Related format (WADO).\n\nExample:\n```\ncurl --header \"x-goog-meta-owner: <my-api-key>\" --header \"Accept: multipart/related; type=application/dicom; transfer-syntax=*, application/json\" -X GET \"https://dev.predict.milvue.com/v3/studies/<my-StudyInstanceUID>?inference_command=smarturgences\" --output \"response_content.txt\"\n```\nReturn:\n- 1. A multipart/related response with several `application/dicom` parts.\n\nOR\n\n- 2. A json with the prediction status (e.g. `running`): a raw json if the header `Accept: ...` contains `application/json`, or encapsulated in a multipart message otherwise.\n\n__Note: the prefered way to get a prediction status is to use `/v3/studies/<my-StudyInstanceUID>/status`. This route should be mainly used to get dicoms, via dicomweb protocol (option 1 above).__",
+                "operationId": "_get_study_v3_studies__study_instance_uid__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Study Instance Uid",
+                            "type": "string"
+                        },
+                        "name": "study_instance_uid",
+                        "in": "path"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Signed Url",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "name": "signed_url",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/components/schemas/OutputFormatEnum"
+                        },
+                        "name": "output_format",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/components/schemas/LanguageEnum"
+                        },
+                        "name": "language",
+                        "in": "query"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/InferenceCommandEnum"
+                        },
+                        "name": "inference_command",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Timezone",
+                            "type": "string"
+                        },
+                        "name": "timezone",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/components/schemas/OutputSelectionEnum"
+                        },
+                        "name": "output_selection",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/components/schemas/RecapThemeEnum"
+                        },
+                        "name": "recap_theme",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/components/schemas/StructuredReportEnum"
+                        },
+                        "name": "structured_report_format",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/components/schemas/StaticReportEnum"
+                        },
+                        "name": "static_report_format",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Accept",
+                            "type": "string"
+                        },
+                        "name": "accept",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetStudyResponseV3"
+                                }
+                            },
+                            "multipart/related": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Exceeded quota",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    }
+                ]
+            }
+        },
+        "/v3/smarturgences/{study_instance_uid}": {
+            "get": {
+                "summary": "v3 - Get Smarturgences predictions (json)",
+                "operationId": "_get_smarturgences_v3_smarturgences__study_instance_uid__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Study Instance Uid"
+                        },
+                        "name": "study_instance_uid",
+                        "in": "path"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Language",
+                            "type": "string"
+                        },
+                        "name": "language",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetSmarturgencesResponseV3"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Exceeded quota",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    }
+                ]
+            }
+        },
+        "/v3/smartxpert/{study_instance_uid}": {
+            "get": {
+                "summary": "v3 - Get Smartxpert Predictions (json)",
+                "operationId": "_get_smartxpert_v3_smartxpert__study_instance_uid__get",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Study Instance Uid"
+                        },
+                        "name": "study_instance_uid",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetSmartxpertResponseV3"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Exceeded quota",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    }
+                ]
+            }
+        },
+        "/v3/interesting/{StudyInstanceUID}": {
+            "post": {
+                "summary": "v3 - Post Interesting",
+                "description": "Flag a study as interesting.\n\nExample:\n```\ncurl -H \"x-goog-meta-owner: <my-api-key>\" -X POST https://dev.predict.milvue.com/v3/interesting/<my-StudyInstanceUID>\n```\n\nUsage: report errors or raise attention on specific cases.\n\nNote:\n- __the study must have been sent to Milvue API before being posted here__\n- it's easier for Milvue to retrieve a specific case if it was flagged as interesting",
+                "operationId": "_post_interesting_v3_interesting__StudyInstanceUID__post",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Studyinstanceuid",
+                            "type": "string"
+                        },
+                        "name": "StudyInstanceUID",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Exceeded quota",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "BodyPartSchema": {
+                "title": "BodyPartSchema",
+                "required": [
+                    "value",
+                    "translation",
+                    "score"
+                ],
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "title": "Value",
+                        "type": "string",
+                        "description": "Predicted body part"
+                    },
+                    "translation": {
+                        "$ref": "#/components/schemas/integrator__schemas__external__TranslationSchema"
+                    },
+                    "score": {
+                        "title": "Score",
+                        "type": "number",
+                        "description": "Prediction score, between 0 and 1"
+                    }
+                }
+            },
+            "BoundingBoxSchema": {
+                "title": "BoundingBoxSchema",
+                "required": [
+                    "value",
+                    "translation",
+                    "label",
+                    "score",
+                    "top_left",
+                    "bottom_right"
+                ],
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "title": "Value",
+                        "type": "string",
+                        "description": "Predicted value"
+                    },
+                    "translation": {
+                        "$ref": "#/components/schemas/integrator__schemas__external__TranslationSchema"
+                    },
+                    "label": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/PathoLabelEnum"
+                            }
+                        ],
+                        "description": "Prediction interpretation"
+                    },
+                    "score": {
+                        "title": "Score",
+                        "type": "number",
+                        "description": "Prediction score, between 0 and 1"
+                    },
+                    "top_left": {
+                        "title": "Top Left",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "description": "The top left corner of the box: `[x, y]`"
+                    },
+                    "bottom_right": {
+                        "title": "Bottom Right",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "description": "The bottom right corner of the box: `[x, y]`"
+                    }
+                }
+            },
+            "ErrorResponse": {
+                "title": "ErrorResponse",
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "title": "Message",
+                        "type": "string"
+                    },
+                    "example": {
+                        "title": "Example",
+                        "type": "string"
+                    }
+                }
+            },
+            "GetSmarturgencesResponseV3": {
+                "title": "GetSmarturgencesResponseV3",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/SmarturgencesV3"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ResponseV3"
+                    }
+                ],
+                "discriminator": {
+                    "propertyName": "status",
+                    "mapping": {
+                        "done": "#/components/schemas/SmarturgencesV3",
+                        "running": "#/components/schemas/ResponseV3",
+                        "forbidden": "#/components/schemas/ResponseV3"
+                    }
+                }
+            },
+            "GetSmartxpertResponseV3": {
+                "title": "GetSmartxpertResponseV3",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/SmartxpertV3"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ResponseV3"
+                    }
+                ],
+                "discriminator": {
+                    "propertyName": "status",
+                    "mapping": {
+                        "done": "#/components/schemas/SmartxpertV3",
+                        "running": "#/components/schemas/ResponseV3",
+                        "forbidden": "#/components/schemas/ResponseV3"
+                    }
+                }
+            },
+            "GetStudyResponseV3": {
+                "title": "GetStudyResponseV3",
+                "required": [
+                    "StudyInstanceUID",
+                    "status",
+                    "version"
+                ],
+                "type": "object",
+                "properties": {
+                    "StudyInstanceUID": {
+                        "title": "StudyInstanceUID",
+                        "type": "string",
+                        "description": "The `StudyInstanceUID (0020,000D)` attribute of the study"
+                    },
+                    "status": {
+                        "title": "Status",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/InferenceStatusEnum"
+                            }
+                        ],
+                        "description": "Current status of the study"
+                    },
+                    "version": {
+                        "title": "Version",
+                        "type": "string",
+                        "description": "Milvue Suite's version"
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "description": "Optional message"
+                    },
+                    "signed_urls": {
+                        "title": "Signed Urls",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "List of signed urls to download from Milvue server"
+                    }
+                }
+            },
+            "GetStudyStatusResponseV3": {
+                "title": "GetStudyStatusResponseV3",
+                "required": [
+                    "StudyInstanceUID",
+                    "status",
+                    "version"
+                ],
+                "type": "object",
+                "properties": {
+                    "StudyInstanceUID": {
+                        "title": "StudyInstanceUID",
+                        "type": "string",
+                        "description": "The `StudyInstanceUID (0020,000D)` attribute of the study"
+                    },
+                    "status": {
+                        "title": "Status",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/StudyStatusEnum"
+                            }
+                        ],
+                        "description": "Current status of the study"
+                    },
+                    "version": {
+                        "title": "Version",
+                        "type": "string",
+                        "description": "Milvue Suite's version"
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "description": "Optional message"
+                    }
+                }
+            },
+            "HTTPValidationError": {
+                "title": "HTTPValidationError",
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "title": "Detail",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        }
+                    }
+                }
+            },
+            "InferenceCommandEnum": {
+                "title": "InferenceCommandEnum",
+                "enum": [
+                    "smarturgences",
+                    "smartxpert"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "InferenceStatusEnum": {
+                "title": "InferenceStatusEnum",
+                "enum": [
+                    "done",
+                    "running",
+                    "empty",
+                    "forbidden"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "InstanceSchema": {
+                "title": "Instance",
+                "required": [
+                    "SOPInstanceUID"
+                ],
+                "type": "object",
+                "properties": {
+                    "SOPInstanceUID": {
+                        "title": "SOPInstanceUID",
+                        "type": "string",
+                        "description": "The `SOPInstanceUID (0008,0018)` attribute of the dicom instance"
+                    },
+                    "SeriesInstanceUID": {
+                        "title": "StudyInstanceUID",
+                        "type": "string",
+                        "description": "The `SeriesInstanceUID (0020,000E)` attribute of the series"
+                    }
+                }
+            },
+            "InstanceWithUrlSchema": {
+                "title": "Instance With Url",
+                "required": [
+                    "SOPInstanceUID",
+                    "signed_url"
+                ],
+                "type": "object",
+                "properties": {
+                    "SOPInstanceUID": {
+                        "title": "SOPInstanceUID",
+                        "type": "string",
+                        "description": "The `SOPInstanceUID (0008,0018)` attribute of the dicom instance"
+                    },
+                    "SeriesInstanceUID": {
+                        "title": "StudyInstanceUID",
+                        "type": "string",
+                        "description": "The `SeriesInstanceUID (0020,000E)` attribute of the series"
+                    },
+                    "signed_url": {
+                        "title": "Signed Url",
+                        "type": "string",
+                        "description": "Signed url to upload/download to/from Milvue server"
+                    }
+                }
+            },
+            "LanguageEnum": {
+                "title": "LanguageEnum",
+                "enum": [
+                    "fr",
+                    "en",
+                    "es",
+                    "de",
+                    "it",
+                    "pt"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "MeasureSchema": {
+                "title": "Measure",
+                "required": [
+                    "type",
+                    "value",
+                    "translation",
+                    "measure",
+                    "unit",
+                    "lines"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "title": "Type",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/MeasureTypeEnum"
+                            }
+                        ]
+                    },
+                    "value": {
+                        "title": "Value",
+                        "type": "string",
+                        "description": "Predicted value"
+                    },
+                    "translation": {
+                        "$ref": "#/components/schemas/integrator__schemas__external__TranslationSchema"
+                    },
+                    "measure": {
+                        "title": "Measure",
+                        "type": "number",
+                        "description": "Predicted measure"
+                    },
+                    "unit": {
+                        "title": "Unit",
+                        "type": "string",
+                        "description": "Measure unit (e.g., `mm`, `deg`)"
+                    },
+                    "lines": {
+                        "title": "Lines",
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        },
+                        "description": "\nA list of lines, each line being a pair of points: `[x1, y1, x2, y2]`\n\nMeasures of type `angle` contain two lines, forming the two rays\n\nMeasures of type `length` contain one line, forming the measured segment\n"
+                    }
+                }
+            },
+            "MeasureTypeEnum": {
+                "title": "MeasureTypeEnum",
+                "enum": [
+                    "angle",
+                    "length"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "OutputFormatEnum": {
+                "title": "OutputFormatEnum",
+                "enum": [
+                    "overlay",
+                    "highbit",
+                    "gsps"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "OutputSelectionEnum": {
+                "title": "OutputSelectionEnum",
+                "enum": [
+                    "all",
+                    "no_recap",
+                    "no_negatives",
+                    "none"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "PathoLabelEnum": {
+                "title": "PathoLabelEnum",
+                "enum": [
+                    "abnormal",
+                    "normal",
+                    "doubt",
+                    "unknown",
+                    "out_scope"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "PathoStatusEnum": {
+                "title": "PathoStatusEnum",
+                "enum": [
+                    "yes",
+                    "no",
+                    "doubt",
+                    "out_scope",
+                    "unknown"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "PostDicomWebResponseV3": {
+                "title": "PostDicomWebResponseV3",
+                "required": [
+                    "StudyInstanceUID",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "StudyInstanceUID": {
+                        "title": "StudyInstanceUID",
+                        "type": "string",
+                        "description": "The `StudyInstanceUID (0020,000D)` attribute of the study"
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string"
+                    },
+                    "retrieve_url": {
+                        "title": "Retrieve Url",
+                        "type": "string"
+                    }
+                }
+            },
+            "PostSignedUrlResponseV3": {
+                "title": "PostSignedUrlResponseV3",
+                "required": [
+                    "StudyInstanceUID",
+                    "signed_urls"
+                ],
+                "type": "object",
+                "properties": {
+                    "StudyInstanceUID": {
+                        "title": "StudyInstanceUID",
+                        "type": "string",
+                        "description": "The `StudyInstanceUID (0020,000D)` attribute of the study"
+                    },
+                    "signed_urls": {
+                        "title": "Signed Urls",
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "RecapThemeEnum": {
+                "title": "RecapThemeEnum",
+                "enum": [
+                    "dark",
+                    "light"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "ReportSchema": {
+                "title": "Report",
+                "required": [
+                    "title",
+                    "techniques",
+                    "results"
+                ],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "title": "Title",
+                        "type": "string"
+                    },
+                    "techniques": {
+                        "title": "Techniques",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "results": {
+                        "title": "Results",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ResultSchema"
+                        }
+                    }
+                }
+            },
+            "ResponseV3": {
+                "title": "ResponseV3",
+                "required": [
+                    "StudyInstanceUID",
+                    "status",
+                    "version"
+                ],
+                "type": "object",
+                "properties": {
+                    "StudyInstanceUID": {
+                        "title": "StudyInstanceUID",
+                        "type": "string",
+                        "description": "The `StudyInstanceUID (0020,000D)` attribute of the study"
+                    },
+                    "status": {
+                        "title": "Status",
+                        "enum": [
+                            "running",
+                            "forbidden"
+                        ],
+                        "type": "string"
+                    },
+                    "version": {
+                        "title": "Version",
+                        "type": "string",
+                        "description": "Milvue Suite's version"
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "description": "Optional message"
+                    }
+                }
+            },
+            "ResultSchema": {
+                "title": "ResultSchema",
+                "required": [
+                    "region",
+                    "items"
+                ],
+                "type": "object",
+                "properties": {
+                    "region": {
+                        "title": "Region",
+                        "type": "string"
+                    },
+                    "items": {
+                        "title": "Items",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "SmarturgencesInstanceSchema": {
+                "title": "SmarturgencesInstanceSchema",
+                "required": [
+                    "SOPInstanceUID",
+                    "SeriesInstanceUID",
+                    "body_parts",
+                    "findings",
+                    "bounding_boxes"
+                ],
+                "type": "object",
+                "properties": {
+                    "SOPInstanceUID": {
+                        "title": "SOPInstanceUID",
+                        "type": "string",
+                        "description": "The `SOPInstanceUID (0008,0018)` attribute of the dicom instance"
+                    },
+                    "SeriesInstanceUID": {
+                        "title": "StudyInstanceUID",
+                        "type": "string",
+                        "description": "The `SeriesInstanceUID (0020,000E)` attribute of the series"
+                    },
+                    "body_parts": {
+                        "title": "Body Parts",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BodyPartSchema"
+                        }
+                    },
+                    "findings": {
+                        "title": "Findings",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/integrator__schemas__external__FindingSchema"
+                        }
+                    },
+                    "bounding_boxes": {
+                        "title": "Bounding Boxes",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BoundingBoxSchema"
+                        }
+                    }
+                }
+            },
+            "SmarturgencesV3": {
+                "title": "Milvue API Response",
+                "required": [
+                    "StudyInstanceUID",
+                    "status",
+                    "version",
+                    "flag",
+                    "hl7",
+                    "findings",
+                    "instances"
+                ],
+                "type": "object",
+                "properties": {
+                    "StudyInstanceUID": {
+                        "title": "StudyInstanceUID",
+                        "type": "string",
+                        "description": "The `StudyInstanceUID (0020,000D)` attribute of the study"
+                    },
+                    "status": {
+                        "title": "Status",
+                        "enum": [
+                            "done"
+                        ],
+                        "type": "string"
+                    },
+                    "version": {
+                        "title": "Version",
+                        "type": "string",
+                        "description": "Milvue Suite's version"
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "description": "Optional message"
+                    },
+                    "flag": {
+                        "title": "Flag",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/integrator__schemas__external__FlagSchema"
+                            }
+                        ],
+                        "description": "Study level flag, providing SmartUrgences overall result"
+                    },
+                    "hl7": {
+                        "title": "HL7",
+                        "type": "string",
+                        "description": "HL7 message describing the study level results"
+                    },
+                    "findings": {
+                        "title": "Findings",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/integrator__schemas__external__FindingSchema"
+                        },
+                        "description": "List of study level findings"
+                    },
+                    "instances": {
+                        "title": "Instances",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SmarturgencesInstanceSchema"
+                        },
+                        "description": "Detailed results for each instance"
+                    },
+                    "signed_url": {
+                        "title": "Signed Url",
+                        "type": "string",
+                        "description": "Signed url to download study recapitulative dicom"
+                    },
+                    "report": {
+                        "$ref": "#/components/schemas/ReportSchema"
+                    }
+                }
+            },
+            "SmartxpertInstanceSchema": {
+                "title": "SmartxpertInstanceSchema",
+                "required": [
+                    "SOPInstanceUID",
+                    "SeriesInstanceUID",
+                    "body_parts",
+                    "measures"
+                ],
+                "type": "object",
+                "properties": {
+                    "SOPInstanceUID": {
+                        "title": "SOPInstanceUID",
+                        "type": "string",
+                        "description": "The `SOPInstanceUID (0008,0018)` attribute of the dicom instance"
+                    },
+                    "SeriesInstanceUID": {
+                        "title": "StudyInstanceUID",
+                        "type": "string",
+                        "description": "The `SeriesInstanceUID (0020,000E)` attribute of the series"
+                    },
+                    "body_parts": {
+                        "title": "Body Parts",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BodyPartSchema"
+                        }
+                    },
+                    "measures": {
+                        "title": "Measures",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureSchema"
+                        },
+                        "description": "A list of measures, e.g., length or angle."
+                    }
+                }
+            },
+            "SmartxpertV3": {
+                "title": "SmartXpert Response",
+                "required": [
+                    "StudyInstanceUID",
+                    "status",
+                    "version",
+                    "instances"
+                ],
+                "type": "object",
+                "properties": {
+                    "StudyInstanceUID": {
+                        "title": "StudyInstanceUID",
+                        "type": "string",
+                        "description": "The `StudyInstanceUID (0020,000D)` attribute of the study"
+                    },
+                    "status": {
+                        "title": "Status",
+                        "enum": [
+                            "done"
+                        ],
+                        "type": "string"
+                    },
+                    "version": {
+                        "title": "Version",
+                        "type": "string",
+                        "description": "Milvue Suite's version"
+                    },
+                    "message": {
+                        "title": "Message",
+                        "type": "string",
+                        "description": "Optional message"
+                    },
+                    "instances": {
+                        "title": "Instances",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SmartxpertInstanceSchema"
+                        },
+                        "description": "Detailed results for each instance"
+                    }
+                }
+            },
+            "StaticReportEnum": {
+                "title": "StaticReportEnum",
+                "enum": [
+                    "rgb",
+                    "pdf",
+                    "none"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "StructuredReportEnum": {
+                "title": "StructuredReportEnum",
+                "enum": [
+                    "lite",
+                    "normal",
+                    "full",
+                    "none"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "StudySchema": {
+                "title": "Study",
+                "required": [
+                    "StudyInstanceUID"
+                ],
+                "type": "object",
+                "properties": {
+                    "StudyInstanceUID": {
+                        "title": "StudyInstanceUID",
+                        "type": "string",
+                        "description": "The `StudyInstanceUID (0020,000D)` attribute of the study"
+                    }
+                }
+            },
+            "StudyStatusEnum": {
+                "title": "StudyStatusEnum",
+                "enum": [
+                    "done",
+                    "running",
+                    "error"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "ValidationError": {
+                "title": "ValidationError",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "loc": {
+                        "title": "Location",
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        }
+                    },
+                    "msg": {
+                        "title": "Message",
+                        "type": "string"
+                    },
+                    "type": {
+                        "title": "Error Type",
+                        "type": "string"
+                    }
+                }
+            },
+            "integrator__schemas__external__FindingSchema": {
+                "title": "FindingSchema",
+                "required": [
+                    "value",
+                    "translation",
+                    "label",
+                    "score"
+                ],
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "title": "Value",
+                        "type": "string",
+                        "description": "Predicted value"
+                    },
+                    "translation": {
+                        "$ref": "#/components/schemas/integrator__schemas__external__TranslationSchema"
+                    },
+                    "label": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/PathoLabelEnum"
+                            }
+                        ],
+                        "description": "Prediction interpretation"
+                    },
+                    "score": {
+                        "title": "Score",
+                        "type": "number",
+                        "description": "Prediction score, between 0 and 1"
+                    },
+                    "type": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/PathoStatusEnum"
+                            }
+                        ],
+                        "description": "Deprecated: use `label` instead",
+                        "deprecated": true
+                    }
+                }
+            },
+            "integrator__schemas__external__FlagSchema": {
+                "title": "FlagSchema",
+                "required": [
+                    "score",
+                    "label"
+                ],
+                "type": "object",
+                "properties": {
+                    "score": {
+                        "title": "Score",
+                        "type": "number",
+                        "description": "Prediction score, between 0 and 1"
+                    },
+                    "label": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/PathoLabelEnum"
+                            }
+                        ],
+                        "description": "Prediction interpretation"
+                    }
+                }
+            },
+            "integrator__schemas__external__TranslationSchema": {
+                "title": "Translation",
+                "required": [
+                    "en",
+                    "fr",
+                    "es",
+                    "de",
+                    "it",
+                    "pt"
+                ],
+                "type": "object",
+                "properties": {
+                    "en": {
+                        "title": "English",
+                        "type": "string"
+                    },
+                    "fr": {
+                        "title": "French",
+                        "type": "string"
+                    },
+                    "es": {
+                        "title": "Spanish",
+                        "type": "string"
+                    },
+                    "de": {
+                        "title": "German",
+                        "type": "string"
+                    },
+                    "it": {
+                        "title": "Italian",
+                        "type": "string"
+                    },
+                    "pt": {
+                        "title": "Portuguese",
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "APIKeyHeader": {
+                "type": "apiKey",
+                "description": "\nAuthentication is done via an API key in the request's header:\n```\n\"x-goog-meta-owner: <my-api-key>\"\n```\nwhere `<my-api-key>` is a uuid-v4 (e.g. `22209633-26ea-4b35-a197-e55c375dc36f`).\n\nThe API key is unique for each user (clinics) and provided by Milvue.\n",
+                "in": "header",
+                "name": "x-goog-meta-owner"
+            }
+        }
+    }
+}
