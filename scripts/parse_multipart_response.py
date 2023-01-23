@@ -3,6 +3,7 @@ python parse_multipart_response.py response_content.txt
 """
 
 import sys
+
 from milvue_sdk.utils import decode_multipart
 
 
