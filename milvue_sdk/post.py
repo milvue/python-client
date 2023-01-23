@@ -4,7 +4,7 @@ import requests
 from .utils import encode_multipart, write_dataset_to_bytes
 
 
-async def post(
+def post(
     api_url: str, dcm_list: list[pydicom.Dataset], token: str, params: dict = {}
 ) -> requests.Response:
     url = f"{api_url}/v3/studies?signed_url=False"
@@ -18,9 +18,9 @@ async def post(
     return r
 
 
-async def post_signed_url():
+def post_signed_url():
     raise NotImplementedError
 
 
-async def post_interesting():
+def post_interesting():
     raise NotImplementedError
