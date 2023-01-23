@@ -6,13 +6,13 @@ It implements STOW and WADO protocols from the DICOMweb Standard, https://www.di
 
 ## Install 
 
-```
+```bash
 pip install -e .
 ```
 
 ## Example
 
-```
+```python
 import pydicom
 
 import milvue_sdk
