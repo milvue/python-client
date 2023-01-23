@@ -53,16 +53,19 @@ Usage:
 MILVUE_API_URL= MILVUE_API_TOKEN= python scripts/predict_study.py <path/to/dcm1> <path/to/dcm2>
 ```
 
-TODO:
+## TODO
 
 Implementation of dicom upload and download using signed urls instead of STOW/WADO
 
-In addition, the following Pydantic Schemas (generated with https://github.com/deepmap/oapi-codegen) describe JSON responses for non-DICOMweb routes:
+Implement post to `v3/interesting` route
+
+Use Pydantic Schemas (generated with https://github.com/deepmap/oapi-codegen) describing JSON responses for non-DICOMweb routes:
 
 - `GetStatusResponseV3`: schema for *v3/studies/{study_instance_uid}/status*, the current prediction status
 - `GetSmarturgencesResponseV3`: schema for *v3/smarturgences/{study_instance_uid}*, Smarturgences results
 - `GetSmartxpertResponseV3`: schema for *v3/smartxpert/{study_instance_uid}*, Smartxpert results
 
 
+## Contact
 
 Please write to contact@milvue.com for more information on Milvue integration
