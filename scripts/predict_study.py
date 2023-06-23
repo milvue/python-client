@@ -2,6 +2,7 @@ import os
 import sys
 
 import pydicom
+from pydicom.uid import generate_uid
 
 import milvue_sdk
 
@@ -13,6 +14,12 @@ dcm_list = [pydicom.dcmread(p) for p in sys.argv[1:]]
 study_instance_uid = dcm_list[0].StudyInstanceUID
 for dcm in dcm_list[1:]:
     assert dcm.StudyInstanceUID == study_instance_uid
+
+# if needed, renew uids
+# study_instance_uid = generate_uid()
+# for dcm in dcm_list:
+#     dcm.StudyInstanceUID = study_instance_uid
+#     dcm.SOPInstanceUID = generate_uid()
 
 # Post study
 milvue_sdk.post(API_URL, dcm_list, API_TOKEN)
