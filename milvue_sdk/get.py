@@ -35,9 +35,9 @@ async def wait_done_async(
 
 def get_status(api_url: str, study_instance_uid: str, token: str):
     url = f"{api_url}/v3/studies/{study_instance_uid}/status"
-    r = requests.get(url=url, headers={"x-goog-meta-owner": token})
-    r.raise_for_status()
-    return r.json()
+    response = requests.get(url=url, headers={"x-goog-meta-owner": token})
+    response.raise_for_status()
+    return response.json()
 
 
 def get(

@@ -1,19 +1,22 @@
 import os
 import sys
-
 import pydicom
 from pydicom.uid import generate_uid
-
 import milvue_sdk
+from dotenv import load_dotenv
+
+load_dotenv()
 
 API_URL = os.getenv("MILVUE_API_URL")
 API_TOKEN = os.getenv("MILVUE_API_TOKEN")
 
 # Load study dicoms + check all dicoms belong to the same study
 dcm_list = [pydicom.dcmread(p) for p in sys.argv[1:]]
+
 study_instance_uid = dcm_list[0].StudyInstanceUID
-for dcm in dcm_list[1:]:
-    assert dcm.StudyInstanceUID == study_instance_uid
+if any(dcm.StudyInstanceUID != study_instance_uid for dcm in dcm_list):
+    raise Exception("All dicoms do not belong to the same study")
+
 
 # if needed, renew uids
 # study_instance_uid = generate_uid()
@@ -25,7 +28,7 @@ for dcm in dcm_list[1:]:
 milvue_sdk.post(API_URL, dcm_list, API_TOKEN)
 
 # Wait for prediction
-study_status = milvue_sdk.wait_done(API_URL, dcm.StudyInstanceUID, API_TOKEN)
+study_status = milvue_sdk.wait_done(API_URL, study_instance_uid, API_TOKEN)
 if study_status["status"] != "done":
     raise RuntimeError("Prediction Error")
 
@@ -41,7 +44,10 @@ smarturgences_json = milvue_sdk.get_smarturgences(
 smartxpert_dicoms = milvue_sdk.get(API_URL, study_instance_uid, "smartxpert", API_TOKEN)
 smartxpert_json = milvue_sdk.get_smartxpert(API_URL, study_instance_uid, API_TOKEN)
 
-print(smarturgences_dicoms)
-print(smarturgences_json)
-print(smartxpert_dicoms)
-print(smartxpert_json)
+print("smarturgences_dicoms : ", smarturgences_dicoms)
+print("----------------------------------------------------------------------------------------------------------------------------------------")
+print("smarturgences_json : ", smarturgences_json)
+print("----------------------------------------------------------------------------------------------------------------------------------------")
+print("smartxpert_dicoms : ", smartxpert_dicoms)
+print("----------------------------------------------------------------------------------------------------------------------------------------")
+print("smartxpert_json : ", smartxpert_json)

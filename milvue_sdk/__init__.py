@@ -5,5 +5,4 @@ from .get import (
     get_smarturgences,
     get_smartxpert,
     wait_done,
-    get_status,
 )
