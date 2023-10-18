@@ -22,9 +22,7 @@ import sys
 import pydicom
 from pydicom.uid import generate_uid
 import milvue_sdk
-from dotenv import load_dotenv
 
-load_dotenv()
 
 API_URL = os.getenv("MILVUE_API_URL")
 API_TOKEN = os.getenv("MILVUE_API_TOKEN")
