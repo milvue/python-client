@@ -51,9 +51,9 @@ def get(
         "content-type": "application/dicom",
         "x-goog-meta-owner": token,
     }
-    r = requests.get(url=url, headers=headers)
-    res = decode_multipart(r.content, r.headers.get("Content-Type"))
-    return res
+    response = requests.get(url=url, headers=headers)
+    result = decode_multipart(response.content, response.headers.get("Content-Type"))
+    return result
 
 
 def get_signed_url():
@@ -62,13 +62,13 @@ def get_signed_url():
 
 def get_smarturgences(api_url: str, study_instance_uid: str, token: str):
     url = f"{api_url}/v3/smarturgences/{study_instance_uid}"
-    r = requests.get(url=url, headers={"x-goog-meta-owner": token})
-    r.raise_for_status()
-    return r.json()
+    response = requests.get(url=url, headers={"x-goog-meta-owner": token})
+    response.raise_for_status()
+    return response.json()
 
 
 def get_smartxpert(api_url: str, study_instance_uid: str, token: str):
     url = f"{api_url}/v3/smartxpert/{study_instance_uid}"
-    r = requests.get(url=url, headers={"x-goog-meta-owner": token})
-    r.raise_for_status()
-    return r.json()
+    response = requests.get(url=url, headers={"x-goog-meta-owner": token})
+    response.raise_for_status()
+    return response.json()
