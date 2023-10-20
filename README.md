@@ -10,8 +10,6 @@ It implements STOW and WADO protocols from the DICOMweb Standard, https://www.di
 pip install -e .
 ```
 
-Create a `.env` file and define `MILVUE_API_URL` and `MILVUE_API_TOKEN`
-
 ## Example
 
 See `scripts/predict_study.py`:
@@ -57,7 +55,7 @@ smartxpert_json = milvue_sdk.get_smartxpert(API_URL, study_instance_uid, API_TOK
 
 Usage:
 ```bash
-python scripts/predict_study.py <path/to/dcm1> <path/to/dcm2>
+MILVUE_API_URL= MILVUE_API_TOKEN= python scripts/predict_study.py <path/to/dcm1> <path/to/dcm2>
 ```
 
 ## TODO
