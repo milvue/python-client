@@ -6,6 +6,7 @@ import requests
 
 from .utils import decode_multipart
 
+
 def wait_done(
     api_url, study_instance_uid, token, interval=3, timeout=180, verbose=False
 ):
@@ -18,6 +19,7 @@ def wait_done(
             return study_status
         time.sleep(interval)
     return study_status
+
 
 async def wait_done_async(
     api_url, study_instance_uid, token, interval=3, timeout=180, verbose=False
@@ -45,8 +47,12 @@ def get(
     study_instance_uid: str,
     inference_command: str,
     token: str,
+    **kwargs: dict,
 ) -> list[pydicom.Dataset]:
     url = f"{api_url}/v3/studies/{study_instance_uid}?inference_command={inference_command}&signed_url=False"
+    query_string = [f"{k}={v}" for k, v in kwargs.items()].join("&")
+    if query_string:
+        url += f"&{query_string}"
     headers = {
         "content-type": "application/dicom",
         "x-goog-meta-owner": token,
