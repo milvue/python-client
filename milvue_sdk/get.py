@@ -50,7 +50,7 @@ def get(
     **kwargs: dict,
 ) -> list[pydicom.Dataset]:
     url = f"{api_url}/v3/studies/{study_instance_uid}?inference_command={inference_command}&signed_url=False"
-    query_string = [f"{k}={v}" for k, v in kwargs.items()].join("&")
+    query_string = "&".join([f"{k}={v}" for k, v in kwargs.items()])
     if query_string:
         url += f"&{query_string}"
     headers = {
